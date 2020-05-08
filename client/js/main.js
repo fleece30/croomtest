@@ -130,12 +130,13 @@ window.onload = () => {
     let yvalue;
     let val = []; 
     var uiii = {};
+    var un;
 
 
     function toggle_canvasContainer(isShow){
       const DOMcanvasContainer = document.getElementById('glanceTrackerCanvasContainer');
       if (!DOMcanvasContainer) return;
-      DOMcanvasContainer.style.opacity = (isShow) ? '1' : '0';
+      DOMcanvasContainer.style.opacity = (isShow) ? '0' : '0';
     };
 
   // function myname() {
@@ -151,7 +152,13 @@ window.onload = () => {
   // };
 
 
-    function toggle_glanceTracking(event){ //the user clic on the button
+    function toggle_glanceTracking(event){
+      if (type==teacher){
+        _state=disabled;
+        GLANCETRACKERAPI.toggle_pause(true, true);
+          toggle_canvasContainer(false);
+          break;
+      } //the user clic on the button
       switch(_state){
         case _states.idle:
           init_glanceTracking();
@@ -279,7 +286,10 @@ window.onload = () => {
    },
    data: newData,
 }); 
-      
+
+     if (type==teacher){
+       un = username;
+     }
   //console.log(uiii);   
 
  var xVal = 0;
@@ -293,7 +303,7 @@ window.onload = () => {
  
    for (var j = 0; j < count; j++) {
      for(var t =0; t < newData.length;t++){
- 
+      
      newData[t]['dataPoints'].push({
        x: xVal,
        y: uiii[newData[t]['name']]
@@ -323,9 +333,9 @@ window.onload = () => {
           }
           var arr=[];
           arr.push(sum);
-          
+          if (newData[i]["name"]!=username){
           top5.push({key:newData[i]['name'],value:arr});
-
+          }
         }
       }
       //console.log(top5,22);
@@ -347,7 +357,7 @@ window.onload = () => {
 }
 top51 = top5.sort(compare)
     //console.log(top51);
-    
+      document.getElementById("listtitle").innerHTML = "Least Attentive Students"
       document.getElementById('dis0').innerHTML = "<h2 style='color:black;'>1."+top51[0]["key"]+"</h2>";
       document.getElementById('dis1').innerHTML = "<h2 style='color:black;'>2."+top51[1]["key"]+"</h2>";
       //document.getElementById('dis2').innerHTML = "<h2 style='color:black;'>3."+top51[2]["key"]+"</h2>";
