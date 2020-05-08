@@ -259,10 +259,12 @@ window.onload = () => {
             if (!connectedUsers.includes(msg.username)) {
               connectedUsers.push(msg.username);
               val.push(msg.yvalue);
-              uiii[msg.uname] = 0;
+              uiii[msg.username] = 0;
+              
               newData.push({'type': "spline", 'showInLegend': true, 'name': msg.username, 'dataPoints': []})
             } 
-            uiii[msg.uname] = msg.yvalue;
+            uiii[msg.username] = msg.yvalue;
+            //console.log(uiii,66)
             }
         });
       });
@@ -278,7 +280,7 @@ window.onload = () => {
    data: newData,
 }); 
       
-      console.log(uiii);   
+  //console.log(uiii);   
 
  var xVal = 0;
  var yVal = 100; 
@@ -305,8 +307,8 @@ window.onload = () => {
        newData[t]['dataPoints'].shift();
      }
    }
-
-   console.log(newData);
+   //console.log(33,uiii,33);
+   //console.log(newData,11);
  
 
       top5=[]
@@ -316,16 +318,17 @@ window.onload = () => {
         if (newData[i]['name']!==""){
           var t=0;
           for(t=(newData[i]['dataPoints'].length)-1;t>=(newData[i]["dataPoints"].length)-20;t--){
-            //  console.log(newData[i]['dataPoints'][t].y);
+            //console.log(newData[i]['dataPoints'][t].y,44);
             sum=sum+(newData[i]['dataPoints'][t].y);
           }
           var arr=[];
           arr.push(sum);
+          
           top5.push({key:newData[i]['name'],value:arr});
 
         }
       }
-      //console.log(top5)
+      //console.log(top5,22);
 
 
       function compare(a, b) {
@@ -339,11 +342,11 @@ window.onload = () => {
   } else if (nameA < nameB) {
     comparison = 1;
   }
-  console.log(comparison)
+  //console.log(comparison)
   return comparison;
 }
 top51 = top5.sort(compare)
-    console.log(top51);
+    //console.log(top51);
     
       document.getElementById('dis0').innerHTML = "<h2 style='color:black;'>1."+top51[0]["key"]+"</h2>";
       document.getElementById('dis1').innerHTML = "<h2 style='color:black;'>2."+top51[1]["key"]+"</h2>";
